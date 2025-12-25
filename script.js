@@ -15,23 +15,30 @@
     grid.innerHTML = '';
     items = [];
     for(let i=1;i<=MAX;i++){
-      const el = document.createElement('div');
-      el.className = 'item bg-white rounded-lg shadow text-center py-3 cursor-pointer font-semibold transition transform hover:-translate-y-1';
-      el.textContent = i;
-      el.dataset.num = i;
-      el.addEventListener('click', () => toggleDisable(i));
-      grid.appendChild(el);
-      items.push({n:i, el, disabled:false});
+      const col = document.createElement('div');
+      col.className = 'col-4 col-sm-3 col-md-2';
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-light w-100 py-3 fw-semibold';
+      btn.textContent = i;
+      btn.dataset.num = i;
+      btn.addEventListener('click', () => toggleDisable(i));
+      col.appendChild(btn);
+      grid.appendChild(col);
+      items.push({n:i, el:btn, disabled:false, col});
     }
   }
 
   function toggleDisable(n){
     const it = items[n-1];
-    it.disabled = !it.disabled;
     if(it.disabled){
-      it.el.classList.add('opacity-40','line-through','cursor-not-allowed');
+      it.disabled = false;
+      it.el.classList.remove('opacity-50','text-decoration-line-through');
+      it.el.disabled = false;
     } else {
-      it.el.classList.remove('opacity-40','line-through','cursor-not-allowed');
+      it.disabled = true;
+      it.el.classList.add('opacity-50','text-decoration-line-through');
+      it.el.disabled = true;
     }
   }
 
@@ -61,18 +68,26 @@
   function highlight(n){
     clearSelected();
     const it = items[n-1];
-    it.el.classList.add('bg-gradient-to-r','from-blue-500','to-sky-400','text-white','shadow-lg');
+    it.el.classList.add('btn-primary','text-white','shadow');
+    it.el.classList.remove('btn-light');
+    // add small pop animation
+    it.el.classList.add('pop');
+    setTimeout(()=> it.el.classList.remove('pop'), 450);
     showResult(n + '번');
   }
 
   function clearSelected(){
-    items.forEach(i=>i.el.classList.remove('bg-gradient-to-r','from-blue-500','to-sky-400','text-white','shadow-lg'));
+    items.forEach(i=>{
+      i.el.classList.remove('btn-primary','text-white','shadow');
+      if(!i.disabled) i.el.classList.add('btn-light');
+    });
   }
 
   function disableNumber(n){
     const it = items[n-1];
     it.disabled = true;
-    it.el.classList.add('opacity-40','line-through','cursor-not-allowed');
+    it.el.classList.add('opacity-50','text-decoration-line-through');
+    it.el.disabled = true;
   }
 
   function markPickedAsDisabled(){
@@ -98,7 +113,9 @@
   function resetAll(){
     items.forEach(i=>{
       i.disabled=false;
-      i.el.classList.remove('opacity-40','line-through','cursor-not-allowed','bg-gradient-to-r','from-blue-500','to-sky-400','text-white','shadow-lg');
+      i.el.disabled = false;
+      i.el.classList.remove('opacity-50','text-decoration-line-through','btn-primary','text-white','shadow','pop');
+      i.el.classList.add('btn-light');
     });
     history = [];
     renderHistory();
