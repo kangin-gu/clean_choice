@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>청소 당번 뽑기 (1–30)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>청소 당번 뽑기</h1>
+
+    <section class="controls">
+      <div class="buttons">
+        <button id="pickBtn">랜덤 뽑기</button>
+        <button id="resetBtn">초기화</button>
+        <button id="markDoneBtn">뽑힌 번호 비활성화</button>
+      </div>
+      <div class="options">
+        <label>
+          <input type="checkbox" id="autoDisable"> 뽑힌 번호 자동 비활성화
+        </label>
+      </div>
+    </section>
+
+    <section class="result" aria-live="polite">
+      <div id="resultBox" class="result-box">—</div>
+    </section>
+
+    <section class="grid-wrap">
+      <div id="grid" class="grid"></div>
+    </section>
+
+    <section class="history-wrap">
+      <h2>뽑기 기록</h2>
+      <ol id="history" class="history"></ol>
+    </section>
+
+    <footer class="note">번호를 클릭하면 수동으로 비활성화/활성화할 수 있습니다.</footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
