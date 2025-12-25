@@ -10,6 +10,24 @@
 
   let items = []; // {n, el, disabled}
   let history = [];
+  let currentMode = 'group';
+
+  // handle mode card clicks
+  function initModeCards(){
+    const cards = document.querySelectorAll('.mode-card');
+    cards.forEach(c => {
+      c.addEventListener('click', () => {
+        cards.forEach(x=>x.classList.remove('active'));
+        c.classList.add('active');
+        currentMode = c.dataset.mode || 'group';
+        // show chosen mode briefly in result
+        showResult((c.querySelector('h3')?.textContent || '모드') + ' 선택됨');
+      });
+    });
+    // default active
+    const first = document.querySelector('.mode-card');
+    if(first) first.classList.add('active');
+  }
 
   function createGrid(){
     grid.innerHTML = '';
@@ -27,6 +45,24 @@
       grid.appendChild(col);
       items.push({n:i, el:btn, disabled:false, col});
     }
+  }
+
+  // update pickRandom to mention mode (visual only)
+  function pickRandom(){
+    const avail = getAvailable();
+    if(avail.length===0){
+      showResult('사용 가능한 번호가 없습니다');
+      return;
+    }
+    const idx = Math.floor(Math.random()*avail.length);
+    const num = avail[idx];
+    highlight(num);
+    pushHistory(num);
+    if(autoDisable.checked){
+      setTimeout(()=>{ disableNumber(num); }, 400);
+    }
+    // small extra: show mode as subtext in console (or future use)
+    console.log('Picked in mode:', currentMode);
   }
 
   function toggleDisable(n){
@@ -128,4 +164,5 @@
 
   // init
   createGrid();
+  initModeCards();
 })();

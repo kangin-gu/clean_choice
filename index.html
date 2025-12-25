@@ -8,10 +8,35 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-light min-vh-100">
-  <main class="container py-5">
-    <h1 class="h4 fw-bold mb-3">청소 당번 뽑기</h1>
+  <main class="container py-6">
+    <header class="d-flex align-items-center justify-content-between mb-4">
+      <div>
+        <div class="brand fw-bold" style="letter-spacing:1px">랜덤 뽑기</div>
+        <div class="text-muted small">간편하고 빠른 당번 뽑기</div>
+      </div>
+      <div class="text-muted small">1–30</div>
+    </header>
 
-    <section class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-3">
+    <!-- 간단한 모드 카드(토스 느낌: 심플, 넉넉한 여백) -->
+    <section class="mb-4">
+      <div class="d-flex gap-3 justify-content-start flex-wrap">
+        <button class="mode-pill btn btn-light active mode-pill--primary" data-mode="group">모둠</button>
+        <button class="mode-pill btn btn-light" data-mode="number">번호 입력</button>
+        <button class="mode-pill btn btn-light" data-mode="manual">직접 입력</button>
+      </div>
+    </section>
+
+    <!-- 주요 컨트롤 영역: 결과 + 액션 -->
+    <section class="mb-4 d-flex flex-column flex-md-row gap-3 align-items-stretch">
+      <div class="flex-grow-1">
+        <div id="resultBox" class="result-box bg-white rounded-3 shadow-sm d-flex align-items-center justify-content-center">—</div>
+      </div>
+      <div class="d-flex flex-column gap-2" style="min-width:180px">
+        <button id="pickBtn" class="btn btn-primary btn-lg">랜덤 뽑기</button>
+        <button id="markDoneBtn" class="btn btn-outline-secondary">뽑힌 번호 비활성화</button>
+        <button id="resetBtn" class="btn btn-link text-muted">초기화</button>
+      </div>
+    </section>
       <div class="d-flex gap-2">
         <button id="pickBtn" class="btn btn-primary">랜덤 뽑기</button>
         <button id="resetBtn" class="btn btn-outline-secondary">초기화</button>
